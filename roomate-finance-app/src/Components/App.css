@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color:  white;
+  color: rgb(39, 66, 66);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*   JUMBOTRON STYLING   */
+.title-jumbo {
+  background-color: #218838;
+  color: white;
+  padding: 2.5rem 1rem;
+}
+
+.title-jumbo > h1 {
+  text-align: center;
+  font-size: 3.5rem;
+}
+
+@media (max-width: 600px) {
+  .title-jumbo > h1 {
+    text-align: center;
+    font-size: 2rem;
+  }
+}
+/* --------------------------------------------------------  */
+
+/*    MONTH SELECT STYLING   */
+.select-column {
+  padding-top: 2rem;
+}
+
+.dropdown-menu {
+  padding: 0;
+}
+
+.product-nav>p{
+  margin: 0.35rem;
+}
+
+.dropdown-item:focus{
+  background-color: rgba(72,180,97,.5);
+}
+
+.show>.btn-success.dropdown-toggle:focus,
+.btn-success:focus{
+  box-shadow: none;
+}
+
+.month-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-item:focus>p{
+ color: rgb(39, 66, 66);
+}
+/* --------------------------------------------------------  */
+
+/*    WELCOME DISPLAY STYLING   */
+.welcome-display {
+  padding-top: 1rem;
+}
+
+.welcome-display > h1,
+.welcome-display> h4{
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .welcome-display > h1{
+    font-size: 1.5rem
+  }
+  .welcome-display> h4{
+    font-size: 1rem
+  }
+}
+/* --------------------------------------------------------  */
+
+
+/*    DATA DISPLAY STYLING   */
+.tab-content {
+  padding-top: 1rem;
+}
+
+.tab-pane > div > h1,
+.tab-pane > div > h4{
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .tab-pane > div > h1{
+    font-size: 1.5rem
+  }
+  .tab-pane > div > h4{
+    font-size: 1rem
+  }
+}
+/* --------------------------------------------------------  */
+
+
+/*    EXPENSES STYLING   */
+.expenses-block{
+  border: solid 1px;
+  border-color: rgb(39, 66, 66);
+  border-radius: 0.2rem;
+}
+/* --------------------------------------------------------  */
+
+
+/*    EXPENSES STYLING   */
+.roomate-column {
+  padding-top: 2rem;
+}
+/* --------------------------------------------------------  */

@@ -33,26 +33,26 @@
         "expenses": 
         [{
             "rent": "$2415.00",
-            "rent_due_date": "07/01/2020",
+            "rent_due_date": "08/01/2020",
             "electricity": "$50.23",
-            "electricity_due_date": "07/19/2020"
+            "electricity_due_date": "08/19/2020"
         }],
         "payments": 
         [{
             "roomate_id": 1,
             "roomate": "Felipe",
             "rent": "$00.00",
-            "rent_payment_date": "08/01/2020",
+            "rent_payment_date": "N/a",
             "electricity": "$00.00",
-            "electricity_payment_date": "08/19/2020"
+            "electricity_payment_date": "N/a"
         },
         {
             "roomate_id": 2,
             "roomate": "Anthony",
             "rent": "$00.00",
-            "rent_payment_date": "08/01/2020",
+            "rent_payment_date": "N/a",
             "electricity": "$00.00",
-            "electricity_payment_date": "08/19/2020"
+            "electricity_payment_date": "N/a"
         }]
     }
 ]
