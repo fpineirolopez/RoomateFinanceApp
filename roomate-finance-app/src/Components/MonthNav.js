@@ -10,17 +10,29 @@ class MonthNav extends React.Component{
     constructor() {
         super()
         this.state = {
-            monthData : monthly_data,
-            show : false,
+            monthData: monthly_data,
+            expeseData: {
+                "Amount":0,"Category":"","Due_Date":"","Month":"","Status":"","Year":0
+            },
+            show: false,
             monthDisplay: 
             {
                 "month_id": 0,
                 "month": "",
                 "expenses": {},
                 "payments": {}
-            }
+            },
+            time: {}
         }
         this.handleSelect = this.handleSelect.bind(this)
+    }
+
+    componentWillMount() {
+        fetch("/api/v1/expenses/all")
+            .then(response => response.json())
+            .then(data => {
+                this.setState({expenseData: data})
+            })
     }
 
     handleSelect(month_id){
@@ -32,24 +44,18 @@ class MonthNav extends React.Component{
     }
 
     render(){
-        
-        let welcome 
 
-        if (this.state.show === false) {
-            welcome =   <div className="welcome-display">
-                            <h1>Welcome to the roomate finance app!</h1><br/>
-                            <h4>Please select the month you would like to view/edit</h4>
-                        </div>
-        }
-        else
-            welcome = <div/>
+        const monthNav = this.state.expenseData.map((val) => <MonthNavItem key={val.month} monthName={val.month}/>)
 
-        const monthNav = this.state.monthData.map((val) => <MonthNavItem key={val.month_id} monthName={val.month}/>)
-
-       return (
+        return (
            <div>
             <Tab.Container defaultActiveKey="">
-                {welcome}
+                {this.state.show === true ? <div/> :
+                    <div className="welcome-display">
+                        <h1>Welcome to the roomate finance app!</h1><br/>
+                        <h4>Please select the month you would like to view/edit</h4>
+                    </div>
+                }
                 <div className="select-column">
                     <DropdownButton className="month-dropdown" title="Select Month" variant="success" id="dropdown-basic-button" onSelect={this.handleSelect}>
                         {monthNav}
@@ -60,10 +66,11 @@ class MonthNav extends React.Component{
                 </div>
             </Tab.Container>
             <br/>
+            {/* Expense info display */}
             <Expenses data={this.state.monthDisplay} show={this.state.show}/>
             <br/>
             {/* Roomate info display */}
-                <RoomateData data={this.state.monthDisplay.payments} show={this.state.show}/>
+            <RoomateData data={this.state.monthDisplay.payments} show={this.state.show}/>
             </div>
         )
     }

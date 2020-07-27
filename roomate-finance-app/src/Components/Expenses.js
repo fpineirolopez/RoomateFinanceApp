@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 function Expenses(props) {
 
-    console.log(props.data)
+    // console.log(props.data)
 
     let expensesDisplay 
 

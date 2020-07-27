@@ -3,24 +3,9 @@ import { Tab } from 'react-bootstrap'
 
 function MonthPane(props) {
 
-    let display 
-
-    if (props.monthName === "")
-    {
-        display = <div></div>
-                
-    }
-    else {
-        display = 
-                <div>
-                    <h1>{props.monthName}</h1>
-                </div>
-    }
-
-
     return (
         <Tab.Pane className="tab-pane" eventKey={props.monthName}>
-            {display}
+            {props.monthName === "" ? <div/> : <div><h1>{props.monthName}</h1></div>}
         </Tab.Pane>
     )
 }
