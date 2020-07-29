@@ -108,16 +108,6 @@ code {
 }
 /* --------------------------------------------------------  */
 
-
-/*    EXPENSES STYLING   */
-.expenses-block{
-  border: solid 1px;
-  border-color: rgb(39, 66, 66);
-  border-radius: 0.2rem;
-}
-/* --------------------------------------------------------  */
-
-
 /*    TABLES STYLING   */
 .roomate-columns {
   padding-top: 2rem;
