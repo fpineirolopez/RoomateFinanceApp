@@ -1,22 +1,23 @@
 
 import React from 'react'
 import { Card, Table } from 'react-bootstrap'
-
+import TableRows from './TableRow.js'
 
 function DisplayCard(props) {
 
-    let displayType, elementRent, elementElectricity
+    let displayType, tableRows
+
+    // console.log(props.data)
 
     if (props.type === "P"){
         displayType = "Payment"
-        elementRent = props.data.rent_payment_date
-        elementElectricity = props.data.electricity_payment_date
+        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} data={val}/>) 
     }
     else {
         displayType = "Due"
-        elementRent = props.data.rent_due_date
-        elementElectricity = props.data.electricity_due_date
+        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} data={val}/>) 
     }
+    
 
     return (
         <Card>
@@ -30,19 +31,11 @@ function DisplayCard(props) {
                         <th>Category</th>
                         <th>Amount {displayType}</th>
                         <th>{displayType} Date</th>
+                        <th>Status</th>
                     </tr>
-                </thead>
+                </thead> 
                 <tbody>
-                    <tr>
-                        <td>Rent</td>
-                        <td>{props.data.rent}</td>
-                        <td>{elementRent}</td>
-                    </tr>
-                    <tr>
-                        <td>Electricity</td>
-                        <td>{props.data.electricity}</td>
-                        <td>{elementElectricity}</td>
-                    </tr>
+                    {tableRows}
                 </tbody>
             </Table>
             </Card.Body>

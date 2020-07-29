@@ -5,13 +5,20 @@ import DisplayCard from './DisplayCard'
 
 function RoomateData(props) {
 
+    const roommates = [] 
+    
+    props.data.forEach ( payments => {
+        if (roommates.findIndex(b => b.roommate_name === payments.roommate_name) === -1)
+        roommates.push(payments)
+    })
+    
     return (
         <Container>
             <Row>
                 {props.show === false ? <div/> :  
-                    props.data.map((val) => 
-                        <Col key={val.roomate_id} lg={true} className="roomate-columns">
-                            <DisplayCard key={val.roomate_id} type="P" data={val} title={val.roomate}/>
+                    roommates.map((val) => 
+                        <Col key={val.roommate_name} lg={true} className="roomate-columns">
+                            <DisplayCard key={val.roommate_name} type="P" data={props.data.filter( d => d.roommate_name === val.roommate_name)} title={val.roommate_name}/>
                         </Col>) 
                 }
             </Row>

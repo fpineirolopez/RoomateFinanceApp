@@ -5,19 +5,17 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 function Expenses(props) {
 
-    // console.log(props.data)
-
     let expensesDisplay 
 
     if (props.show === false) 
         expensesDisplay = <div/>
     else
-        expensesDisplay = <DisplayCard type="E" data={props.data.expenses[0]} title="Expenses"/>
+        expensesDisplay = <DisplayCard type="E" data={props.data} title="Expenses"/>
 
     return (
         <Container>
             <Row>
-                <Col xs={true}>
+                <Col xs={true} className="roomate-columns">
                     {expensesDisplay}
                 </Col>
             </Row>
