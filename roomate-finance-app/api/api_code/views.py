@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from . import db
+from .. import db
 from .models import Expense, Payment
 
 main = Blueprint('main',__name__)
@@ -11,7 +11,7 @@ def get_all_expenses():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'Category': expense.category, 'Amount': expense.amount, 'Due_Date': expense.due_date, 'Month': expense.month, 'Status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'due_date': expense.due_date, 'month': expense.month, 'status': expense.status})
 
     return jsonify(expenses)
 
@@ -21,11 +21,9 @@ def get_expenses_months():
     months = []
 
     for m in Expense.query.distinct(Expense.month):
-        months.append(('month', m.month))
+        months.append({'month': m.month})
 
-    disitnct_months = list(set([i for i in months]))
-
-    return jsonify(disitnct_months)
+    return jsonify(months)
 
 @main.route('/api/v1/expenses', methods=['GET'])
 def get_expenses_filtered():
@@ -36,7 +34,7 @@ def get_expenses_filtered():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'Category': expense.category, 'Amount': expense.amount, 'Due_Date': expense.due_date, 'Month': expense.month, 'Status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'due_date': expense.due_date, 'month': expense.month, 'status': expense.status})
 
     return jsonify(expenses)
 
@@ -48,7 +46,7 @@ def get_all_payments():
     payments = []
 
     for payment in payment_list:
-        payments.append({'Roommate_Name': payment.roommate_name,'Category': payment.category, 'Amount': payment.amount, 'Payment_Date': payment.payment_date, 'Month': payment.month, 'Status': payment.status})
+        payments.append({'roommate_name': payment.roommate_name,'category': payment.category, 'amount': payment.amount, 'payment_date': payment.payment_date, 'month': payment.month, 'status': payment.status})
 
     return jsonify(payments)
 
@@ -61,7 +59,7 @@ def get_payments_filtered():
     payments = []
 
     for payment in payment_list:
-        payments.append({'Roommate_Name': payment.roommate_name,'Category': payment.category, 'Amount': payment.amount, 'Payment_Date': payment.payment_date, 'Month': payment.month, 'Status': payment.status})
+        payments.append({'roommate_name': payment.roommate_name,'category': payment.category, 'amount': payment.amount, 'payment_date': payment.payment_date, 'month': payment.month, 'status': payment.status})
 
     return jsonify(payments)
 

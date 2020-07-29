@@ -22,7 +22,12 @@ class MonthNav extends React.Component{
         fetch("/api/v1/expenses/months")
             .then(response => response.json())
             .then(data => {
-                this.setState({months: data})
+                const m = []
+                data.forEach(element => {
+                    if (m.findIndex(b => b.month === element.month) === -1)
+                    m.push(element) 
+                });
+                this.setState({months: m})
             })
     }
 
