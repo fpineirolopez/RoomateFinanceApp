@@ -3,7 +3,7 @@ import MonthNavItem from './MonthNavItem';
 import Expenses from './Expenses.js'
 import RoomateData from './RoomateData.js'
 import MonthPane from './MonthPane.js'
-import { Tab, DropdownButton} from "react-bootstrap";
+import { Tab, DropdownButton, Spinner} from "react-bootstrap";
 
 class MonthNav extends React.Component{
     constructor() {
@@ -13,7 +13,8 @@ class MonthNav extends React.Component{
             paymentData: [{}],
             months: [],
             show: false,
-            monthDisplay: {}
+            monthDisplay: {},
+            isFetching: false
         }
         this.handleSelect = this.handleSelect.bind(this)
     }
@@ -32,6 +33,7 @@ class MonthNav extends React.Component{
     }
 
     handleSelect(month){
+        this.setState({isFetching:true})
         const newmonth = this.state.months.filter(val =>  val.month === month)
         this.setState({
             monthDisplay: newmonth[0],
@@ -45,7 +47,7 @@ class MonthNav extends React.Component{
         fetch("/api/v1/payments?month=" + month)
             .then(response => response.json())
             .then(data => {
-                this.setState({paymentData: data})
+                this.setState({paymentData: data, isFetching: false})
             })
     }
 
@@ -54,7 +56,8 @@ class MonthNav extends React.Component{
         const monthNav = this.state.months.map((val) => <MonthNavItem key={val.month} monthName={val.month}/>)
 
         return (
-            
+            this.state.isFetching?
+            <div className='spinner-wrapper'><Spinner animation="border" variant="success"/></div> :
             <div>
                 <Tab.Container defaultActiveKey="">
                     {this.state.show === true ? <div/> :
@@ -73,9 +76,9 @@ class MonthNav extends React.Component{
                     </div>
                 </Tab.Container>
                 {/* Expense info display */}
-                <Expenses data={this.state.expenseData} show={this.state.show}/>
+                <Expenses data={this.state.expenseData} payments={this.state.paymentData} show={this.state.show} isFetching={this.state.isFetching}/>
                 {/* Roomate info display */}
-                <RoomateData data={this.state.paymentData} show={this.state.show}/>
+                <RoomateData data={this.state.paymentData} show={this.state.show} isFetching={this.state.isFetching}/>
             </div>
         )
     }

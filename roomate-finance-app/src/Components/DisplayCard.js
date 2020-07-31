@@ -15,7 +15,7 @@ function DisplayCard(props) {
     }
     else {
         displayType = "Due"
-        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} data={val}/>) 
+        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} payments={props.payments.filter(p => p.category === val.category)} data={val}/>) 
     }
     
 

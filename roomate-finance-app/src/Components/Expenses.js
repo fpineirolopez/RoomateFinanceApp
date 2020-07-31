@@ -7,10 +7,23 @@ function Expenses(props) {
 
     let expensesDisplay 
 
-    if (props.show === false) 
+    if (props.show === false) {
         expensesDisplay = <div/>
-    else
-        expensesDisplay = <DisplayCard type="E" data={props.data} title="Expenses"/>
+    }
+    else {
+        let tp = []
+        props.payments.forEach( entry => {
+            var i = tp.findIndex(b => b.category === entry.category)
+            if(i === -1){
+                tp.push(entry)
+            }
+            else {
+                tp[i].amount += entry.amount
+            }
+        })
+        expensesDisplay = <DisplayCard type="E" data={props.data} payments={tp} title="Expenses"/>
+    }
+        
 
     return (
         <Container>
