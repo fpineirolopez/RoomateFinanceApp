@@ -4,6 +4,8 @@ from .models import Expense, Payment
 
 main = Blueprint('main',__name__)
 
+
+####################### GET REQUESTS  #######################
 @main.route('/api/v1/expenses/all', methods=['GET'])
 def get_all_expenses():
     
@@ -63,3 +65,22 @@ def get_payments_filtered():
 
     return jsonify(payments)
 
+ ####################### POST REQUESTS  #######################
+@main.route('/api/v1/payments/insert_payment', methods=['POST'])
+def insert_payment():
+    
+    payment_data = request.get_json()
+
+    new_payment = Payment(roomate_name=payment_data['roomate_name'], 
+                            category=payment_data['category'],
+                            amount=payment_data['amount'],
+                            payment_date=payment_data['payment_date'],
+                            month=payment_data['month'],
+                            status=payment_data['status'],
+                            roommate_id=payment_data['roommate_id'],
+                            year=payment_data['year'])
+
+    db.session.add(new_payment)
+    db.session.commit()
+
+    return 'Done', 201

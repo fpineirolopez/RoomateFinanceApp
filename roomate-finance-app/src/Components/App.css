@@ -120,6 +120,10 @@ code {
   padding-top: 2rem;
 }
 
+.card-header{
+  text-align: center;
+}
+
 @media (max-width: 500px) {
   .table-bordered td,
   .table-bordered th{
@@ -136,6 +140,7 @@ code {
   }
   .card-header{
     padding: 0.7rem;
+    text-align: center;
   }
   .card-header>h5{
     font-size: 0.95rem;
@@ -159,6 +164,7 @@ code {
   }
   .card-header{
     padding: 0.7rem;
+    text-align: center;
   }
   .card-header>h5{
     font-size: 0.8rem;
@@ -175,4 +181,9 @@ code {
   font-weight: bold; 
   color: #cc270a;
 }
+
+.insert-button {
+  text-align: center;
+}
+
 /* --------------------------------------------------------  */
