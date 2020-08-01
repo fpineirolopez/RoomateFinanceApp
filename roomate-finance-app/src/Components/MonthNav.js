@@ -76,9 +76,22 @@ class MonthNav extends React.Component{
                     </div>
                 </Tab.Container>
                 {/* Expense info display */}
-                <Expenses data={this.state.expenseData} payments={this.state.paymentData} show={this.state.show} isFetching={this.state.isFetching}/>
+                <Expenses 
+                    data={this.state.expenseData} 
+                    payments={this.state.paymentData} 
+                    show={this.state.show} 
+                    isFetching={this.state.isFetching}/>
                 {/* Roomate info display */}
-                <RoomateData data={this.state.paymentData} show={this.state.show} isFetching={this.state.isFetching}/>
+                <RoomateData 
+                    data={this.state.paymentData} 
+                    show={this.state.show} 
+                    isFetching={this.state.isFetching} 
+                    month={this.state.monthDisplay}
+                    onNewPayment={payment => this.setState(prevState => {
+                        const paymentData = [...prevState.paymentData, payment]
+                        return {paymentData}
+                        }
+                    )}/>
             </div>
         )
     }

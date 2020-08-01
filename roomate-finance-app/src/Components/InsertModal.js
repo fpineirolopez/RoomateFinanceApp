@@ -1,28 +1,27 @@
 import React from 'react'
-import { Modal, Button, Container } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
+import PaymentForm from './InsertPaymentForm'
 
-function InsertModal(props){
+function InsertModal(props, {onNewPayment}){
 
     return (
         <Modal
-          {...this.props}
-          size="lg"
-          aria-labelledby="contained-modal-title"
+          {...props}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
           centered
-          className="product-modal"
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              <b>Insert Payment</b>
+              Insert Payment
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Container className="product-modal-body">
-              
-            </Container>
+            <h5>Please enter the payment information</h5>
+            <PaymentForm month={props.month} onNewPayment={props.onNewPayment} hideModal={props.onHide}/>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="insert-button" variant="success" size="md" active onClick={this.props.onHide}><b>Close</b></Button>
+            <Button variant="danger" onClick={props.onHide}>Close</Button>
           </Modal.Footer>
         </Modal>
     )
