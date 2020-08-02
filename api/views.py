@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from .. import db
+from . import db
 from .models import Expense, Payment
 
 main = Blueprint('main',__name__, static_folder='../build', static_url_path='/')

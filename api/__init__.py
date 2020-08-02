@@ -7,13 +7,11 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__,static_folder='../build', static_url_path='/')
 
-    from .api.Config import DBConfigs
-
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
     db.init_app(app)
 
-    from .api.views import main
+    from .views import main
     app.register_blueprint(main)
 
     return app
