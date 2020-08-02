@@ -18,7 +18,6 @@ Flask-SQLAlchemy==2.4.4
 gunicorn==20.0.4
 html5lib==1.0.1
 idna==2.8
-importlib==1.0.4
 ipaddr==2.2.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
