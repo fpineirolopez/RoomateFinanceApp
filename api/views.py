@@ -1,8 +1,15 @@
 from flask import Blueprint, jsonify, request
-from .. import db
+from . import db
 from .models import Expense, Payment
 
-main = Blueprint('main',__name__)
+main = Blueprint('main',__name__, static_folder='../build', static_url_path='/')
+
+
+####################### LOAD REACT cd api #######################
+@main.route('/')
+def index():
+    print(main.root_path)
+    return main.send_static_file('index.html')
 
 
 ####################### GET REQUESTS  #######################
