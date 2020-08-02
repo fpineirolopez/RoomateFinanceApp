@@ -4,10 +4,10 @@ import { Form,  Button } from 'react-bootstrap'
 
 function PaymentForm(props){
 
-    const [roommate_name, setName] = React.useState("");
+    const [roommatename, setName] = React.useState("");
     const [category, setCategory] = React.useState("");
     const [amount, setAmount] = React.useState(0);
-    const [payment_date, setDate] = React.useState("");
+    const [paymentdate, setDate] = React.useState("");
     const [status, setStatus] = React.useState("");
     const [month] = React.useState(props.month.month);
     
@@ -18,7 +18,7 @@ function PaymentForm(props){
                 <Form.Control 
                     type="name" 
                     placeholder="i.e. Felipe" 
-                    value={roommate_name}
+                    value={roommatename}
                     onChange={e => setName(e.target.value)}/>
             </Form.Group>
             <Form.Group controlId="formPaymentCategory">
@@ -42,7 +42,7 @@ function PaymentForm(props){
                 <Form.Control 
                     type="date" 
                     placeholder="i.e. 07/19/2020" 
-                    value={payment_date}
+                    value={paymentdate}
                     onChange={e => setDate(e.target.value)}/>
             </Form.Group>
             <Form.Group controlId="formPaymentStatus">
@@ -59,9 +59,9 @@ function PaymentForm(props){
             </Form.Group>
             <Button variant="success" 
             onClick={ async () => {
-                const roommate_id = roommate_name.toLowerCase() === "felipe"? 1 : 2
+                const roommate_id = roommatename.toLowerCase() === "felipe"? 1 : 2
                 const year = 2020
-                const payment = {roommate_name, category, amount, payment_date, month, status, roommate_id, year}
+                const payment = {roommatename, category, amount, paymentdate, month, status, roommate_id, year}
                 console.log(payment)
                 const response = await fetch("api/v1/payments/insert_payment", {
                         method: "POST",

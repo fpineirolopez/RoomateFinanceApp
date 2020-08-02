@@ -8,7 +8,6 @@ main = Blueprint('main',__name__, static_folder='../build', static_url_path='/')
 ####################### LOAD REACT cd api #######################
 @main.route('/')
 def index():
-    print(main.root_path)
     return main.send_static_file('index.html')
 
 
@@ -20,7 +19,7 @@ def get_all_expenses():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'due_date': expense.due_date, 'month': expense.month, 'status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status})
 
     return jsonify(expenses)
 
@@ -39,11 +38,11 @@ def get_expenses_filtered():
 
     month = request.args.get('month')
 
-    expense_list = Expense.query.filter(Expense.month == month).all()
+    expense_list = Expense.query.filter(Expense.month == month.capitalize()).all()
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'due_date': expense.due_date, 'month': expense.month, 'status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status})
 
     return jsonify(expenses)
 
@@ -55,7 +54,7 @@ def get_all_payments():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommate_name': payment.roommate_name,'category': payment.category, 'amount': payment.amount, 'payment_date': payment.payment_date, 'month': payment.month, 'status': payment.status})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status})
 
     return jsonify(payments)
 
@@ -64,11 +63,11 @@ def get_payments_filtered():
     
     month = request.args.get('month')
 
-    payment_list = Payment.query.filter(Payment.month == month).all()
+    payment_list = Payment.query.filter(Payment.month == month.capitalize()).all()
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommate_name': payment.roommate_name,'category': payment.category, 'amount': payment.amount, 'payment_date': payment.payment_date, 'month': payment.month, 'status': payment.status})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status})
 
     return jsonify(payments)
 
@@ -78,13 +77,12 @@ def insert_payment():
     
     payment_data = request.get_json()
 
-    new_payment = Payment(  roommate_name   = payment_data['roommate_name'], 
+    new_payment = Payment(  roommatename    = payment_data['roommatename'], 
                             category        = payment_data['category'],
                             amount          = payment_data['amount'],
-                            payment_date    = payment_data['payment_date'],
+                            paymentdate     = payment_data['paymentdate'],
                             month           = payment_data['month'],
                             status          = payment_data['status'],
-                            roommate_id     = payment_data['roommate_id'],
                             year            = payment_data['year'])
 
     db.session.add(new_payment)

@@ -2,21 +2,22 @@ from . import db
 
 class Expense(db.Model):
     __tablename__   = 'expenses'
-    category        = db.Column('category',db.String(50),primary_key=True)
+    expenseid       = db.Column('expenseid',db.Integer,primary_key=True)
+    category        = db.Column('category',db.String(50))
     amount          = db.Column('amount',db.Float)
-    due_date        = db.Column('due_date',db.Date)
+    duedate        = db.Column('duedate',db.Date)
     status          = db.Column('status',db.String(50))
-    month           = db.Column('month',db.String(50),primary_key=True)
+    month           = db.Column('month',db.String(50))
     year            = db.Column('year',db.Integer)
 
 
 class Payment(db.Model):
     __tablename__   = 'payments'
-    roommate_id     = db.Column('roommate_id',db.String(50),primary_key=True)
-    category        = db.Column('category',db.String(50),primary_key=True)
+    paymentid       = db.Column('paymentid',db.Integer,primary_key=True)
+    roommatename   = db.Column('roommatename',db.String(50))
+    category        = db.Column('category',db.String(50))
     amount          = db.Column('amount',db.Float)
-    payment_date    = db.Column('payment_date',db.Date)
+    paymentdate    = db.Column('paymentdate',db.Date)
     status          = db.Column('status',db.String(50))
     month           = db.Column('month',db.String(50),primary_key=True)
     year            = db.Column('year',db.Integer)
-    roommate_name   = db.Column('roommate_name')
