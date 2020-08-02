@@ -11,10 +11,10 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # app.config['SECRET_KEY'] = os.environ.get('DATABASE_URL')
 
+    db.init_app(app)
+
     with app.app_context():
         db.create_all()
-
-    db.init_app(app)
 
     from .views import main
     app.register_blueprint(main)
