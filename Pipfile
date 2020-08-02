@@ -38,6 +38,7 @@ urllib3 = "==1.25.8"
 webencodings = "==0.5.1"
 Werkzeug = "==1.0.1"
 setuptools = "*"
+distlib = "*"
 
 [requires]
 python_version = "3.8"
