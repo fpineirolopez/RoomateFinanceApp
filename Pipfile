@@ -39,7 +39,7 @@ webencodings = "==0.5.1"
 Werkzeug = "==1.0.1"
 setuptools = "*"
 distlib = "*"
-pip = "*"
+pip = "==20.2"
 
 [requires]
 python_version = "3.8"
