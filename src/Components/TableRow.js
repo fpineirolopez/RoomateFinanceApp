@@ -5,26 +5,24 @@ function TableRow(props) {
     let date, paid
 
     if (props.type === "P"){
-        console.log(props.data)
         if (props.data.paymentdate === null || props.data.paymentdate === undefined)
             date = "N/a";
         else if (props.data.paymentdate.length === 10)
             date = dateFlip(props.data.paymentdate);
         else 
-            splitDate(props.data.paymentdate);
+            date = splitDate(props.data.paymentdate);
         if (props.data.status === "Paid")
             paid = true
         else
             paid = false
     }
     else {
-        console.log(props.data)
         if (props.data.duedate === null || props.data.duedate === undefined)
             date = "N/a";
         else if (props.data.duedate.length === 10)
             date = dateFlip(props.data.duedate);
         else 
-            splitDate(props.data.duedate);
+            date = splitDate(props.data.duedate);
         if (props.payments[0] !== undefined) {
             if (props.data.amount === props.payments[0].amount)
                 paid = true
