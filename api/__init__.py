@@ -12,7 +12,10 @@ def create_app():
     # app.config['SECRET_KEY'] = os.environ.get('DATABASE_URL')
 
     db.init_app(app)
-    
+
+    with app.app_context():
+        db.create_all()
+
     from .views import main
     app.register_blueprint(main)
 
