@@ -19,5 +19,5 @@ class Payment(db.Model):
     amount          = db.Column('amount',db.Float)
     paymentdate     = db.Column('paymentdate',db.Date)
     status          = db.Column('status',db.String(50))
-    month           = db.Column('month',db.String(50))
+    month           = db.Column('month',db.String(50),primary_key=True)
     year            = db.Column('year',db.Integer)
