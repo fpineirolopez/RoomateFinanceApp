@@ -5,7 +5,8 @@ function TableRow(props) {
     let date, paid
 
     if (props.type === "P"){
-        if (props.data.paymentdate === null)
+        console.log(props.data)
+        if (props.data.paymentdate === null || props.data.paymentdate === undefined)
             date = "N/a";
         else if (props.data.paymentdate.length === 10)
             date = dateFlip(props.data.paymentdate);
@@ -17,7 +18,8 @@ function TableRow(props) {
             paid = false
     }
     else {
-        if (props.data.duedate === null)
+        console.log(props.data)
+        if (props.data.duedate === null || props.data.duedate === undefined)
             date = "N/a";
         else if (props.data.duedate.length === 10)
             date = dateFlip(props.data.duedate);
