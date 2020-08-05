@@ -62,7 +62,6 @@ function PaymentForm(props){
                 const roommate_id = roommatename.toLowerCase() === "felipe"? 1 : 2
                 const year = 2020
                 const payment = {roommatename, category, amount, paymentdate, month, status, roommate_id, year}
-                console.log(payment)
                 const response = await fetch("api/v1/payments/insert_payment", {
                         method: "POST",
                         headers: {

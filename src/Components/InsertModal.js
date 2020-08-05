@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import PaymentForm from './InsertPaymentForm'
 
-function InsertModal(props, {onNewPayment}){
+function InsertModal(props){
 
     return (
         <Modal

@@ -32,32 +32,34 @@ class MonthNav extends React.Component{
             })
     }
 
-    handleSelect(month){
-        this.setState({isFetching:true})
+     handleSelect(month){
+        this.setState({isFetching:true, paymentData: [{}]})
         const newmonth = this.state.months.filter(val =>  val.month === month)
-        this.setState({
-            monthDisplay: newmonth[0],
-            show: true
-        })
-        fetch("/api/v1/expenses?month=" + month)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({expenseData: data})
+        Promise.all([
+            fetch('/api/v1/payments?month='+ month),
+            fetch('/api/v1/expenses?month='+ month)
+        ])
+        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+        .then(([payment_data, expense_data]) => {
+            payment_data.forEach(p => p.amount = parseFloat(p.amount).toFixed(2))
+            this.setState({
+                monthDisplay: newmonth[0],
+                show: true,
+                expenseData: expense_data,
+                paymentData: payment_data, 
+                isFetching: false
             })
-        fetch("/api/v1/payments?month=" + month)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({paymentData: data, isFetching: false})
-            })
+        });
     }
 
     render(){
 
         const monthNav = this.state.months.map((val) => <MonthNavItem key={val.month} monthName={val.month}/>)
-
         return (
-            this.state.isFetching?
-            <div className='spinner-wrapper'><Spinner animation="border" variant="success"/></div> :
+
+        this.state.isFetching?
+            <div className='spinner-wrapper'><Spinner animation="border" variant="success"/></div> 
+             : 
             <div>
                 <Tab.Container defaultActiveKey="">
                     {this.state.show === true ? <div/> :

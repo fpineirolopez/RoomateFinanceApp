@@ -2,7 +2,9 @@ import React from 'react'
 
 function TableRow(props) {
 
-    let date, paid
+    let date, paid, num
+
+    num = parseFloat(props.data.amount).toFixed(2)
 
     if (props.type === "P"){
         if (props.data.paymentdate === null || props.data.paymentdate === undefined)
@@ -24,7 +26,8 @@ function TableRow(props) {
         else 
             date = splitDate(props.data.duedate);
         if (props.payments[0] !== undefined) {
-            if (props.data.amount === props.payments[0].amount)
+            var payment = parseFloat(props.payments[0].amount).toFixed(2)
+            if (num >= payment)
                 paid = true
             else
                 paid = false
@@ -34,7 +37,7 @@ function TableRow(props) {
     return (
         <tr>
             <td>{props.data.category}</td>
-            <td>${props.data.amount}</td>
+            <td>${num}</td>
             <td>{date}</td>
             {paid?<td className="paid">Paid</td>:<td className="unpaid">Unpaid</td>}
         </tr>

@@ -10,12 +10,12 @@ function DisplayCard(props) {
     if (props.type === "P"){
         displayType = "Payment"
         title = props.title + "'s Payments"
-        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} data={val}/>) 
+        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} data={val}/>) 
     }
     else {
         displayType = "Due"
         title = props.title
-        tableRows = props.data.map(val => <TableRows key={val.category} type={props.type} payments={props.payments.filter(p => p.category === val.category)} data={val}/>) 
+        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} payments={props.payments.filter(p => p.category === val.category)} data={val}/>) 
     }
    
     return (
