@@ -67,7 +67,7 @@ def get_payments_filtered():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status,, 'id': payment.paymentid})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
 
     return jsonify(payments)
 
