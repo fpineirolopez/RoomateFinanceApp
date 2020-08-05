@@ -19,7 +19,7 @@ def get_all_expenses():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
 
     return jsonify(expenses)
 
@@ -42,7 +42,7 @@ def get_expenses_filtered():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status})
+        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
 
     return jsonify(expenses)
 
@@ -54,7 +54,7 @@ def get_all_payments():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
 
     return jsonify(payments)
 
@@ -67,7 +67,7 @@ def get_payments_filtered():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status,, 'id': payment.paymentid})
 
     return jsonify(payments)
 

@@ -40,6 +40,7 @@ function RoomateData(props) {
                         </div>
                     </div>
                 }
+            
         </Container>
     )
 }
