@@ -27,7 +27,7 @@ function TableRow(props) {
             date = splitDate(props.data.duedate);
         if (props.payments[0] !== undefined) {
             var payment = parseFloat(props.payments[0].amount).toFixed(2)
-            if (num >= payment)
+            if (num <= payment)
                 paid = true
             else
                 paid = false
