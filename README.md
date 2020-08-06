@@ -1,5 +1,7 @@
 # Roomate Finance WebApp 
 
+Deployed at https://roommate-finance-app.herokuapp.com/
+
 Roomate Finance WebApp to manage common expenses and track individual payments.
 
 Application consists of a **React JS** front-end, with a **Flask/Python** back-end and a **PostgreSQL** DB
