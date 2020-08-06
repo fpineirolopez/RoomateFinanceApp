@@ -22,5 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-api/Config.py
-api/.env
+/api/Config.py
+/api/.env
