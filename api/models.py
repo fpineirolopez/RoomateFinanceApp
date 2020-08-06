@@ -14,7 +14,7 @@ class Expense(db.Model):
 class Payment(db.Model):
     __tablename__   = 'payments'
     paymentid       = db.Column('paymentid',db.Integer,primary_key=True)
-    roommatename   = db.Column('roommatename',db.String(50))
+    roommatename    = db.Column('roommatename',db.String(50))
     category        = db.Column('category',db.String(50))
     amount          = db.Column('amount',db.Numeric(8,2))
     paymentdate    = db.Column('paymentdate',db.Date)

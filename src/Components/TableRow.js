@@ -7,18 +7,24 @@ function TableRow(props) {
     num = +props.data.amount
 
     if (props.type === "P"){
-        if (props.data.paymentdate === null)
+        if (props.data.paymentdate === null || props.data.paymentdate === undefined)
             date = "N/a";
-        date = props.data.paymentdate === null? "N/a" : 
-        props.data.paymentdate.length === 10? dateFlip(props.data.paymentdate) : splitDate(props.data.paymentdate)
+        else if (props.data.paymentdate.length === 10)
+            date = dateFlip(props.data.paymentdate);
+        else 
+            date = splitDate(props.data.paymentdate);
         if (props.data.status === "Paid")
             paid = true
         else
             paid = false
     }
     else {
-        date = props.data.duedate === null? "N/a": 
-        props.data.duedate.length === 10? dateFlip(props.data.duedate) : splitDate(props.data.duedate)
+        if (props.data.duedate === null || props.data.duedate === undefined)
+            date = "N/a";
+        else if (props.data.duedate.length === 10)
+            date = dateFlip(props.data.duedate);
+        else 
+            date = splitDate(props.data.duedate);
         if (props.payments[0] !== undefined) {
             var payment = +props.payments[0].amount
             if (num <= payment)

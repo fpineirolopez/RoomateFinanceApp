@@ -7,8 +7,14 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+gunicorn = "*"
+sqlalchemy = "*"
 flask-sqlalchemy = "*"
+<<<<<<< HEAD:api/Pipfile
 simplejson = "*"
+=======
+psycopg2 = "*"
+>>>>>>> master:Pipfile
 
 [requires]
 python_version = "3.8"
