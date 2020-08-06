@@ -15,10 +15,13 @@ function Expenses(props) {
         props.payments.forEach( entry => {
             var i = tp.findIndex(b => b.category === entry.category)
             if(i === -1){
-                tp.push(entry)
+                var num = +entry.amount
+                tp.push({"category": entry.category, "amount": +num})
             }
             else {
-                tp[i].amount += entry.amount
+                var t = +tp[i].amount
+                var sum = +entry.amount
+                tp[i].amount = sum + t
             }
         })
         expensesDisplay = <DisplayCard type="E" data={props.data} payments={tp} title="Expenses"/>

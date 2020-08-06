@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from . import db
 from .models import Expense, Payment
+import simplejson as json
+from decimal import Decimal
 
 main = Blueprint('main',__name__, static_folder='../build', static_url_path='/')
 
@@ -19,7 +21,7 @@ def get_all_expenses():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
+        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
 
     return jsonify(expenses)
 
@@ -42,7 +44,7 @@ def get_expenses_filtered():
     expenses = []
 
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': expense.amount, 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
+        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
 
     return jsonify(expenses)
 
@@ -54,7 +56,7 @@ def get_all_payments():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
 
     return jsonify(payments)
 
@@ -67,11 +69,11 @@ def get_payments_filtered():
     payments = []
 
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': payment.amount, 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category,'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
 
     return jsonify(payments)
 
- ####################### POST REQUESTS  #######################
+####################### POST REQUESTS  #######################
 @main.route('/api/v1/payments/insert_payment', methods=['POST'])
 def insert_payment():
     
@@ -79,7 +81,7 @@ def insert_payment():
 
     new_payment = Payment(  roommatename    = payment_data['roommatename'], 
                             category        = payment_data['category'],
-                            amount          = payment_data['amount'],
+                            amount          = Decimal(payment_data['amount']),
                             paymentdate     = payment_data['paymentdate'],
                             month           = payment_data['month'],
                             status          = payment_data['status'],
