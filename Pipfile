@@ -11,6 +11,7 @@ gunicorn = "*"
 sqlalchemy = "*"
 flask-sqlalchemy = "*"
 simplejson = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"
