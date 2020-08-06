@@ -32,16 +32,15 @@ class MonthNav extends React.Component{
             })
     }
 
-     handleSelect(month){
+    async handleSelect(month){
         this.setState({isFetching:true, paymentData: [{}]})
         const newmonth = this.state.months.filter(val =>  val.month === month)
         Promise.all([
-            fetch('/api/v1/payments?month='+ month),
-            fetch('/api/v1/expenses?month='+ month)
+            fetch('/api/v1/expenses?month='+ month),
+            fetch('/api/v1/payments?month='+ month)
         ])
-        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-        .then(([payment_data, expense_data]) => {
-            payment_data.forEach(p => p.amount = parseFloat(p.amount).toFixed(2))
+        .then(([res1, res2]) => Promise.all([res1.json(),res2.json()]))
+        .then(([expense_data, payment_data]) => {
             this.setState({
                 monthDisplay: newmonth[0],
                 show: true,

@@ -4,7 +4,7 @@ function TableRow(props) {
 
     let date, paid, num
 
-    num = parseFloat(props.data.amount).toFixed(2)
+    num = +props.data.amount
 
     if (props.type === "P"){
         if (props.data.paymentdate === null || props.data.paymentdate === undefined)
@@ -26,10 +26,7 @@ function TableRow(props) {
         else 
             date = splitDate(props.data.duedate);
         if (props.payments[0] !== undefined) {
-            console.log(props.payments[0].amount)
-            console.log(num)
-            var payment = parseFloat(props.payments[0].amount).toFixed(2)
-            console.log(payment)
+            var payment = +props.payments[0].amount
             if (num <= payment)
                 paid = true
             else
