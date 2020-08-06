@@ -1,3 +1,5 @@
+// simplae Tab.Pane react-bootstrap object, used for month name display
+
 import React from 'react'
 import { Tab } from 'react-bootstrap'
 

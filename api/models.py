@@ -1,5 +1,8 @@
+# Python script with classes for the two tables used in our Postgres DB
+
 from . import db
 
+# Expense class object, used to query and insert data in expenses table
 class Expense(db.Model):
     __tablename__   = 'expenses'
     expenseid       = db.Column('expenseid',db.Integer,primary_key=True)
@@ -10,7 +13,7 @@ class Expense(db.Model):
     month           = db.Column('month',db.String(50))
     year            = db.Column('year',db.Integer)
 
-
+# Paymenty class object, used to query and insert data in payments table
 class Payment(db.Model):
     __tablename__   = 'payments'
     paymentid       = db.Column('paymentid',db.Integer,primary_key=True)

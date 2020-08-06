@@ -1,3 +1,6 @@
+// Simple react-bootstrap Dropdown.Item with month name
+// Used for site navigation
+
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 
