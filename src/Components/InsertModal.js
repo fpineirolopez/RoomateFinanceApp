@@ -5,8 +5,23 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import PaymentForm from './InsertPaymentForm'
+// import ExpenseForm from './InsertPaymentForm'
 
 function InsertModal(props){
+
+    let title, type, content 
+
+    if (props.source === "Expense" ) {
+      title = "Expense";
+      type = "expense";
+      // content = <PaymentForm month={props.month} onNewPayment={props.onNewPayment} hideModal={props.onHide}/>
+      content = <h3>TESTING EXPENSE INSERT LOGIC</h3>
+    }
+    else {
+      title = "Payment";
+      type = "payment";
+      content = <PaymentForm month={props.month} onNewPayment={props.onNewPayment} hideModal={props.onHide}/>
+    }
 
     // sections from this code are directly from bootstrap 
     return (
@@ -20,19 +35,19 @@ function InsertModal(props){
           {/* Modal header with title and close button */}
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Insert Payment
+              Insert {title}
             </Modal.Title>
           </Modal.Header>
           {/* Modal body instantiates InsertPaymentForm component */}
           <Modal.Body>
-            <h5>Please enter the payment information</h5>
+            <h5>Please enter the {type} information</h5>
             {/* InsertPaymentForm child component
                 props
                   month = display month state
                   onNewPayment = function to update paymentData state upon a successful post call
                   hideModal == ??
             */}
-            <PaymentForm month={props.month} onNewPayment={props.onNewPayment} hideModal={props.onHide}/>
+            {content}
           </Modal.Body>
           {/* Footer with close button. OnClick triggers modal OnHide function */}
           <Modal.Footer>

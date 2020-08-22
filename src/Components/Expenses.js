@@ -3,9 +3,13 @@
 
 import React from 'react'
 import DisplayCard from './DisplayCard.js'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button} from 'react-bootstrap'
+import InsertModal from './InsertModal'
 
 function Expenses(props) {
+
+    // used by bootstrap modal class to determin if modal should display or not
+    const [modalShow, setModalShow] = React.useState(false);
 
     // component to be rendered
     let expensesDisplay 
@@ -45,6 +49,45 @@ function Expenses(props) {
     // render element within a single row and col
     return (
         <Container>
+            {/* if show state is false, display empty div, else display payment data */}
+            {props.show === false ? <div/> :  
+                    <div>
+                        {/* if expenseData is empty, display message */}
+                        { props.data.length === 0?
+                        <div className="welcome-display"><br/><h4>No expense data available for this month</h4></div>:
+                        // else map each distinct roomate to a display card, each with its own column
+                        <Row>
+                            <Col xs={true} className="roomate-columns">
+                                {expensesDisplay}
+                            </Col>
+                        </Row>} <br/>
+
+                        {/* Button used to insert data. 
+                            Calls InsertModal component by setting state onClick to true using 
+                            setModalShow method 
+                        */}
+                        <div className="insert-button">
+                            <Button variant="success" onClick={() => setModalShow(true)}>Insert Expense</Button>
+
+                            {/* InsertModal child component
+                                props
+                                    onNewPayment = passes function from parent object to update paymentData upon a successful post call
+                                    month = current month state from parent
+                                    show = show state from parent
+                                    onHide = used to hide modal using setModalShow method and passing false 
+                            */}
+                            <InsertModal
+                                onNewPayment = {props.onNewPayment}
+                                month={props.month}
+                                show={modalShow}
+                                source={"Expense"}
+                                onHide={() => setModalShow(false)}
+                            />
+                        </div>
+                    </div>
+                }
+
+
             <Row>
                 <Col xs={true} className="roomate-columns">
                     {expensesDisplay}

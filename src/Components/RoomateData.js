@@ -62,6 +62,7 @@ function RoomateData(props) {
                                 onNewPayment = {props.onNewPayment}
                                 month={props.month}
                                 show={modalShow}
+                                source={"Payment"}
                                 onHide={() => setModalShow(false)}
                             />
                         </div>
