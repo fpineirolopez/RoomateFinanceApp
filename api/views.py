@@ -22,7 +22,7 @@ def index():
 #####################################################################
 
 
-########################### GET REQUESTS  ###########################
+########################### READ REQUESTS  ###########################
 
 #  get all expenses -- NOT CURRENTLY USED
 @main.route('/api/v1/expenses/all', methods=['GET'])
@@ -109,7 +109,7 @@ def get_payments_filtered():
 
 #####################################################################
 
-##########################  POST REQUESTS  ##########################
+##########################  CREATE REQUESTS  ##########################
 
 # call to insert payment
 @main.route('/api/v1/payments/insert_payment', methods=['POST'])
@@ -134,24 +134,109 @@ def insert_payment():
     return 'Done', 201
 
 # call to insert expense
-@main.route('/api/v1/payments/insert_expense', methods=['POST'])
+@main.route('/api/v1/expenses/insert_expense', methods=['POST'])
 def insert_expense():
     
     # get params from request
     expense_data = request.get_json()
 
     # creat table row object
-    new_expense = Expense(  category        = payment_data['category'],
-                            amount          = Decimal(payment_data['amount']),
-                            duedate         = duedate['paymentdate'],
-                            month           = payment_data['month'],
-                            status          = payment_data['status'],
-                            year            = payment_data['year'])
+    new_expense = Expense(  category        = expense_data['category'],
+                            amount          = Decimal(expense_data['amount']),
+                            duedate         = expense_data['duedate'],
+                            month           = expense_data['month'],
+                            status          = expense_data['status'],
+                            year            = expense_data['year'])
 
     # insert and commit
     db.session.add(new_expense)
     db.session.commit()
 
     return 'Done', 201
+
+#####################################################################
+
+##########################  UPDATE REQUESTS  ##########################
+
+# call to insert payment
+@main.route('/api/v1/payments/update_payment/<int:payment_id>', methods=['PUT'])
+def update_payment(payment_id):
+
+   # query payments table to get payments with matching id
+    payment = Payment.query.filter(Payment.paymentid == payment_id).first()
+
+    # get params from request
+    payment_data = request.get_json()
+
+    # creat table row object
+    payment.roommatename    = payment_data['roommatename']
+    payment.category        = payment_data['category'],
+    payment.amount          = Decimal(payment_data['amount']),
+    payment.paymentdate     = payment_data['paymentdate'],
+    payment.month           = payment_data['month'],
+    payment.status          = payment_data['status'],
+    payment.year            = payment_data['year']
+
+    # commit
+    db.session.commit()
+
+    return 'Done', 200
+
+# call to insert expense
+@main.route('/api/v1/expenses/update_expense/<int:expense_id>', methods=['PUT'])
+def update_expense(expense_id):
+
+    # query payments table to get payments with matching id
+    expense = Expense.query.filter(Expense.expenseid == expense_id).first()
+
+    # get params from request
+    expense_data = request.get_json()
+
+    # creat table row object
+    expense.category        = expense_data['category']
+    expense.amount          = Decimal(expense_data['amount'])
+    expense.duedate         = expense_data['duedate']
+    expense.month           = expense_data['month']
+    expense.status          = expense_data['status']
+    expense.year            = expense_data['year']
+
+    # commit
+    db.session.commit()
+
+    return 'Done', 200
+
+#####################################################################
+
+##########################  DELETE REQUESTS  ##########################
+
+# call to insert payment
+@main.route('/api/v1/payments/delete_payment/<int:payment_id>', methods=['DELETE'])
+def delete_payment(payment_id):
+
+   # query payments table to get payments with matching id
+    payment = Payment.query.filter(Payment.paymentid == payment_id).first()
+
+    # delete
+    db.session.delete(payment)
+
+    # commit
+    db.session.commit()
+
+    return 'Done', 204
+
+# call to insert expense
+@main.route('/api/v1/expenses/delete_expense/<int:expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
+
+    # query payments table to get payments with matching id
+    expense = Expense.query.filter(Expense.expenseid == expense_id).first()
+    
+    # delete
+    db.session.delete(expense)
+
+    # commit
+    db.session.commit()
+
+    return 'Done', 204
 
 #####################################################################

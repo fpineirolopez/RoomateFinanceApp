@@ -10,12 +10,14 @@ function PaymentForm(props){
 
     // state components and functions for user input
     const [roommatename, setName] = React.useState("");
+    const [month, setMonth] = React.useState("");
     const [category, setCategory] = React.useState("");
     const [amount, setAmount] = React.useState(0);
     const [paymentdate, setDate] = React.useState("");
     const [status, setStatus] = React.useState("");
+    
     // state element for display month state
-    const [month] = React.useState(props.month.month);
+    // const [month] = React.useState(props.month.month);
     
     return (
         <Form>
@@ -27,6 +29,15 @@ function PaymentForm(props){
                     placeholder="i.e. Felipe" 
                     value={roommatename}
                     onChange={e => setName(e.target.value)}/>
+            </Form.Group>
+            {/* Category text field = category of Expense made */}
+            <Form.Group controlId="formPaymentMonth">
+                <Form.Label>Expense Month</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    placeholder="i.e. June" 
+                    value={month}
+                    onChange={e => setMonth(e.target.value)}/>
             </Form.Group>
             {/* Category text field = category of payment made */}
             <Form.Group controlId="formPaymentCategory">
@@ -96,7 +107,7 @@ function PaymentForm(props){
                 // if response was successful, call onNewPayment function passed as a prop to update 
                 // payment data on parent components and accross the site, and reset state constants
                 if (response.ok){
-                    props.onNewPayment(payment);
+                    props.onNewPayment(month);
                     setName("");
                     setCategory("");
                     setAmount(0);

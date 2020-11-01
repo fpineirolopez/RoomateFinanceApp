@@ -6,7 +6,7 @@ import React from 'react';
 import MonthNavItem from './MonthNavItem';
 import Expenses from './Expenses.js'
 import RoomateData from './RoomateData.js'
-import MonthPane from './MonthPane.js'
+// import MonthPane from './MonthPane.js'
 import { Tab, DropdownButton, Spinner} from "react-bootstrap";
 
 
@@ -67,6 +67,7 @@ class MonthNav extends React.Component{
     render(){
 
         // map months to dropdown menu items
+        console.log(this.state)
         const monthNav = this.state.months.map((val) => <MonthNavItem key={val.month} monthName={val.month}/>)
         return (
             // if isFetching is true, display spinner
@@ -86,13 +87,10 @@ class MonthNav extends React.Component{
                     }
                     {/* Dropdown button with mapped months entries constant */}
                     <div className="select-column">
+                        <h1>{this.state.monthDisplay.month}</h1>
                         <DropdownButton className="month-dropdown" title="Select Month" variant="success" id="dropdown-basic-button" onSelect={this.handleSelect}>
                             {monthNav}    
                         </DropdownButton >
-                        {/* Month pane displays the monht's name as a title */}
-                        <Tab.Content onSelect={this.handleSelect} className="tab-content">
-                            <MonthPane key={this.state.monthDisplay.month} monthName={this.state.monthDisplay.month} data={this.state.monthDisplay} />
-                        </Tab.Content>
                     </div>
                 </Tab.Container>
                 {/* Expense info display component
@@ -100,32 +98,29 @@ class MonthNav extends React.Component{
                         data = expenseData
                         payments = paymentData (used to determine if an expense has been paid or not)
                         show = show state
-                        isFetching = is Fetching state (not used)
+                        isFetching = is Fetching state (not used)                        
+                        onNewExpense = calls function to update all months, payments, and expenses
                 */}
                 <Expenses 
                     data={this.state.expenseData} 
                     payments={this.state.paymentData} 
                     show={this.state.show} 
-                    isFetching={this.state.isFetching}/>
+                    isFetching={this.state.isFetching}
+                    onNewExpense={this.handleSelect}/>
                 {/* Roomate info display component
                     props:
                         data = paymentData
                         show = show state
                         isFetching = is Fetching state (not used)
                         month = select month state
-                        onNewPayment = function triggered on successful post request to insert new payment
-                                       Used to update paymentData state
+                        onNewPayment = calls function to update all months, payments, and expenses
                 */}
                 <RoomateData 
                     data={this.state.paymentData} 
                     show={this.state.show} 
                     isFetching={this.state.isFetching} 
                     month={this.state.monthDisplay}
-                    onNewPayment={payment => this.setState(prevState => {
-                        const paymentData = [...prevState.paymentData, payment]
-                        return {paymentData}
-                        }
-                    )}/>
+                    onNewPayment={this.handleSelect}/>
             </div>
         )
     }

@@ -5,7 +5,7 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import PaymentForm from './InsertPaymentForm'
-// import ExpenseForm from './InsertPaymentForm'
+import ExpenseForm from './InsertExpenseForm'
 
 function InsertModal(props){
 
@@ -14,8 +14,8 @@ function InsertModal(props){
     if (props.source === "Expense" ) {
       title = "Expense";
       type = "expense";
-      // content = <PaymentForm month={props.month} onNewPayment={props.onNewPayment} hideModal={props.onHide}/>
-      content = <h3>TESTING EXPENSE INSERT LOGIC</h3>
+      content = <ExpenseForm onNewExpense={props.onNewExpense} hideModal={props.onHide}/>
+      // content = <h3>TESTING EXPENSE INSERT LOGIC</h3>
     }
     else {
       title = "Payment";

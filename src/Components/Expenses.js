@@ -53,7 +53,7 @@ function Expenses(props) {
             {props.show === false ? <div/> :  
                     <div>
                         {/* if expenseData is empty, display message */}
-                        { props.data.length === 0?
+                        { props.data.length === 0 ?
                         <div className="welcome-display"><br/><h4>No expense data available for this month</h4></div>:
                         // else map each distinct roomate to a display card, each with its own column
                         <Row>
@@ -77,8 +77,7 @@ function Expenses(props) {
                                     onHide = used to hide modal using setModalShow method and passing false 
                             */}
                             <InsertModal
-                                onNewPayment = {props.onNewPayment}
-                                month={props.month}
+                                onNewExpense = {props.onNewExpense}
                                 show={modalShow}
                                 source={"Expense"}
                                 onHide={() => setModalShow(false)}
@@ -86,13 +85,6 @@ function Expenses(props) {
                         </div>
                     </div>
                 }
-
-
-            <Row>
-                <Col xs={true} className="roomate-columns">
-                    {expensesDisplay}
-                </Col>
-            </Row>
         </Container>
     )
 }
