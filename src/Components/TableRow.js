@@ -4,8 +4,17 @@
 
 
 import React from 'react'
+import {Button} from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import EditModal from './Modal.js'
+import DeleteModal from './Modal.js'
 
 function TableRow(props) {
+
+    // used by bootstrap modal class to determin if modal should display or not
+    const [modalShowEdit, setModalEditShow] = React.useState(false);
+    const [modalShowDel, setModalDelShow] = React.useState(false);
 
     let date, paid, num
 
@@ -60,6 +69,27 @@ function TableRow(props) {
             <td>${num}</td>
             <td>{date}</td>
             {paid?<td className="paid">Paid</td>:<td className="unpaid">Unpaid</td>} 
+            <td>
+                <Button variant="light" className="small-btn" onClick={() => setModalEditShow(true)}><FontAwesomeIcon icon={faEdit}/></Button>
+                <EditModal
+                                    onEdit = {props.onEdit}
+                                    data={props.data}
+                                    date={date}
+                                    month={props.month}
+                                    show={modalShowEdit}
+                                    source={"Edit " + props.type}
+                                    onHide={() => setModalEditShow(false)}
+                                />
+                <Button variant="light" className="small-btn" onClick={() => setModalDelShow(true)}><FontAwesomeIcon icon={faTrash}/></Button>
+                <DeleteModal
+                                    onDelete = {props.onDelete}
+                                    data={props.data}
+                                    month={props.month}
+                                    show={modalShowDel}
+                                    source={"Delete " + props.type}
+                                    onHide={() => setModalDelShow(false)}
+                                />
+            </td>
         </tr>
     )
 }

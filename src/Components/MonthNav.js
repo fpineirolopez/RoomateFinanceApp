@@ -7,7 +7,7 @@ import MonthNavItem from './MonthNavItem';
 import Expenses from './Expenses.js'
 import RoomateData from './RoomateData.js'
 // import MonthPane from './MonthPane.js'
-import { Tab, DropdownButton, Spinner} from "react-bootstrap";
+import { Tab, DropdownButton, Spinner, Row, Button} from "react-bootstrap";
 
 
 class MonthNav extends React.Component{
@@ -16,46 +16,55 @@ class MonthNav extends React.Component{
         this.state = {
             expenseData: [{}],  // store and display expense data for the selected month
             paymentData: [{}],  // store and display payment data for the selected month
-            months: [],         // contains months from api to fill dropdown navigator
+            years: [],
+            yearDisplay: '',
+            months: ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], //hardcoded months
             show: false,        // decide whether to show welcome message (false) or data (true)
-            monthDisplay: {},   // hold selected month
+            monthDisplay: '',   // hold selected month
             isFetching: false   // stop rendering when updating state (false render spinner, true render components)
         }
         this.handleSelect = this.handleSelect.bind(this) // used to change data when a month is selected
+        this.handleSelectYear = this.handleSelectYear.bind(this) // used to change data when a month is selected
+        this.handleSelectMonth = this.handleSelectMonth.bind(this) // used to change data when a month is selected
+        this.handleDataUpdate = this.handleDataUpdate.bind(this) // used to change data when a month is selected
     }
 
     // on component mount, fetch data for all months available and store it to state
     componentDidMount() {
-        fetch("/api/v1/expenses/months")
+        fetch("/api/v1/expenses/years")
             .then(response => response.json())
             .then(data => {
-                const m = []
-                data.forEach(element => {
-                    // save each month only once
-                    if (m.findIndex(b => b.month === element.month) === -1)
-                    m.push(element) 
-                });
+                // const y = []
+                // data.forEach(element => {
+                //     // save each month only once
+                //     if (y.findIndex(b => b.year === element.year) === -1)
+                //         y.push(element.year) 
+                // });
                 // store data into state
-                this.setState({months: m})
+                this.setState({years: data})
             })
     }
 
     // async method to fetch expense and payment data for the selected month, as well as update month_display
-    async handleSelect(month){
+    async handleDataUpdate(month, year){
         // set isFetching to true to stop component re-rendering
         this.setState({isFetching:true, paymentData: [{}]})
-        // get display month from months array
-        const newmonth = this.state.months.filter(val =>  val.month === month)
         // call expenses and payment api fecth passing the selected month
+        const yearsEndpoint = "/api/v1/expenses/years"
+        const expenseEndpoint = "/api/v2/expenses/" + year + "/" + month
+        const paymentEndpoint = "/api/v2/payments/" + year + "/" + month
         Promise.all([
-            fetch('/api/v1/expenses?month='+ month),
-            fetch('/api/v1/payments?month='+ month)
+            fetch(yearsEndpoint),
+            fetch(expenseEndpoint),
+            fetch(paymentEndpoint)
         ])
-        .then(([res1, res2]) => Promise.all([res1.json(),res2.json()]))
+        .then(([res1, res2, res3]) => Promise.all([res1.json(),res2.json(), res3.json()]))
         //update state with received data and new display month
-        .then(([expense_data, payment_data]) => {
+        .then(([year_data, expense_data, payment_data]) => {
             this.setState({
-                monthDisplay: newmonth[0],
+                years: year_data,
+                yearDisplay: year,
+                monthDisplay: month,
                 show: true,
                 expenseData: expense_data,
                 paymentData: payment_data, 
@@ -64,11 +73,53 @@ class MonthNav extends React.Component{
         });
     }
 
+    async handleSelect(){
+        // set isFetching to true to stop component re-rendering
+        this.setState({isFetching:true, paymentData: [{}]})
+        // call expenses and payment api fecth passing the selected month
+        const expenseEndpoint = "/api/v2/expenses/" + this.state.yearDisplay + "/" + this.state.monthDisplay
+        const paymentEndpoint = "/api/v2/payments/" + this.state.yearDisplay + "/" + this.state.monthDisplay
+        Promise.all([
+            fetch(expenseEndpoint),
+            fetch(paymentEndpoint)
+        ])
+        .then(([res1, res2]) => Promise.all([res1.json(),res2.json()]))
+        //update state with received data and new display month
+        .then(([expense_data, payment_data]) => {
+            this.setState({
+                show: true,
+                expenseData: expense_data,
+                paymentData: payment_data, 
+                isFetching: false
+            })
+        });
+    }
+
+    async handleSelectYear(year){
+        // get display month from months array
+        const newYear = this.state.years.filter(val =>  val === parseInt(year))
+        // store data into state
+        this.setState({
+            yearDisplay: newYear
+        })
+    }
+
+    // async method to fetch expense and payment data for the selected month, as well as update month_display
+    async handleSelectMonth(month){
+        // get display month from months array
+        const newMonth = this.state.months.filter(val =>  val === month)
+        // store data into state
+        this.setState({
+            monthDisplay: newMonth
+        })
+    }
+
     render(){
 
         // map months to dropdown menu items
-        console.log(this.state)
-        const monthNav = this.state.months.map((val) => <MonthNavItem key={val.month} monthName={val.month}/>)
+        const monthNav = this.state.months.map((val) => <MonthNavItem key={val} monthName={val}/>)
+        const yearNav = this.state.years.map((val) => <MonthNavItem key={val} monthName={val}/>)
+
         return (
             // if isFetching is true, display spinner
             this.state.isFetching?
@@ -82,15 +133,21 @@ class MonthNav extends React.Component{
                     {this.state.show === true ? <div/> :
                         <div className="welcome-display">
                             <h1>Welcome to the roomate finance app!</h1><br/>
-                            <h4>Please select the month you would like to view/edit</h4>
+                            <h4>Please select the year and month you would like to view/edit</h4>
                         </div>
                     }
                     {/* Dropdown button with mapped months entries constant */}
                     <div className="select-column">
-                        <h1>{this.state.monthDisplay.month}</h1>
-                        <DropdownButton className="month-dropdown" title="Select Month" variant="success" id="dropdown-basic-button" onSelect={this.handleSelect}>
-                            {monthNav}    
-                        </DropdownButton >
+                        <h1>{this.state.monthDisplay}</h1>
+                        <Row>
+                            <DropdownButton className="month-dropdown" title={this.state.monthDisplay === '' ? 'Select Month' : this.state.monthDisplay} variant="success" id="dropdown-basic-button" onSelect={this.handleSelectMonth}>
+                                {monthNav}    
+                            </DropdownButton >
+                            <DropdownButton className="month-dropdown" title={this.state.yearDisplay === '' ? 'Select Year' : this.state.yearDisplay} variant="success" id="dropdown-basic-button" onSelect={this.handleSelectYear}>
+                                {yearNav}    
+                            </DropdownButton >
+                            <Button variant="success" id="dropdown-basic-button" onClick={this.handleSelect}>Go</Button>
+                        </Row>
                     </div>
                 </Tab.Container>
                 {/* Expense info display component
@@ -106,7 +163,9 @@ class MonthNav extends React.Component{
                     payments={this.state.paymentData} 
                     show={this.state.show} 
                     isFetching={this.state.isFetching}
-                    onNewExpense={this.handleSelect}/>
+                    onNewExpense={this.handleDataUpdate}
+                    onEdit={this.handleDataUpdate}
+                    onDelete={this.handleDataUpdate}/>
                 {/* Roomate info display component
                     props:
                         data = paymentData
@@ -120,7 +179,9 @@ class MonthNav extends React.Component{
                     show={this.state.show} 
                     isFetching={this.state.isFetching} 
                     month={this.state.monthDisplay}
-                    onNewPayment={this.handleSelect}/>
+                    onNewPayment={this.handleDataUpdate}
+                    onEdit={this.handleDataUpdate}
+                    onDelete={this.handleDataUpdate}/>
             </div>
         )
     }

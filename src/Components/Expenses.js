@@ -4,7 +4,7 @@
 import React from 'react'
 import DisplayCard from './DisplayCard.js'
 import { Container, Row, Col, Button} from 'react-bootstrap'
-import InsertModal from './InsertModal'
+import InsertModal from './Modal'
 
 function Expenses(props) {
 
@@ -43,7 +43,7 @@ function Expenses(props) {
         //   data = props.data (expenseData)
         //   payments = tp array with total payments / category
         //   title = Expenses (hardcoded)
-        expensesDisplay = <DisplayCard type="E" data={props.data} payments={tp} title="Expenses"/>
+        expensesDisplay = <DisplayCard type="E" data={props.data} payments={tp} title="Expenses" onEdit={props.onEdit} onDelete={props.onDelete}/>
     }
         
     // render element within a single row and col
@@ -78,6 +78,7 @@ function Expenses(props) {
                             */}
                             <InsertModal
                                 onNewExpense = {props.onNewExpense}
+                                data={props.data}
                                 show={modalShow}
                                 source={"Expense"}
                                 onHide={() => setModalShow(false)}

@@ -54,6 +54,18 @@ def get_expenses_months():
     # return json array of expense months
     return jsonify(months)
 
+@main.route('/api/v1/expenses/years', methods=['GET'])
+def get_expenses_years():
+
+    years = []
+
+    # store each distinct year in the years array
+    for y in Expense.query.distinct(Expense.year):
+        years.append(y.year)
+ 
+    # return json array of expense years
+    return jsonify(years)
+
 # get expense information for a specific month
 @main.route('/api/v1/expenses', methods=['GET'])
 def get_expenses_filtered():
@@ -71,7 +83,6 @@ def get_expenses_filtered():
 
     # return json array of expenses
     return jsonify(expenses)
-
 
 # get all payments -- NOT CURRENTLY USED
 @main.route('/api/v1/payments/all', methods=['GET'])
@@ -106,6 +117,42 @@ def get_payments_filtered():
 
     # return json array of payments
     return jsonify(payments)
+
+#####################################################################
+
+##########################  V2 READ REQUESTS  ##########################
+
+# get expense information for a specific month
+@main.route('/api/v2/expenses/<int:year>/<string:month>', methods=['GET'])
+def get_expenses_filtered_v2(year,month):
+
+    # query expenses table to get payments with matching month
+    expense_list = Expense.query.filter(Expense.month == month.capitalize(), Expense.year == year).all()
+    expenses = []
+
+    # generate dictionary array of expenses with values from the query above
+    for expense in expense_list:
+        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'year': expense.year, 'status': expense.status, 'id': expense.expenseid})
+
+    # return json array of expenses
+    return jsonify(expenses)
+
+# get expense information for a specific month
+@main.route('/api/v2/payments/<int:year>/<string:month>', methods=['GET'])
+def get_payments_filtered_v2(year,month):
+
+    # query payments table to get payments with matching month
+    payment_list = Payment.query.filter(Payment.month == month.capitalize(), Payment.year == year).all()
+    payments = []
+
+    # generate dictionary array of payments with values from the query above
+    for payment in payment_list:
+        payments.append({'roommatename': payment.roommatename,'category': payment.category,'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'year': payment.year, 'status': payment.status, 'id': payment.paymentid})
+
+    # return json array of payments
+    return jsonify(payments)
+
+
 
 #####################################################################
 

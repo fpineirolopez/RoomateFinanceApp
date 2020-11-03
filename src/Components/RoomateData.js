@@ -7,7 +7,7 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import DisplayCard from './DisplayCard'
-import InsertModal from './InsertModal'
+import InsertModal from './Modal'
 
 function RoomateData(props) {
 
@@ -33,14 +33,14 @@ function RoomateData(props) {
                         // else map each distinct roomate to a display card, each with its own column
                         <Row>
                             {roommates.map((val) => 
-                                <Col key={val.roommatename} lg={true} className="roomate-columns">
+                                <Col key={val.roommatename} lg={12} className="roomate-columns">
                                     {/* DisplayCard child component
                                         props
                                             type = P (hardcoded)
                                             data = paymentData filtered by the corresponding roommatename
                                             title = name of roommate
                                      */}
-                                    <DisplayCard key={val.roommatname} type="P" data={props.data.filter( d => d.roommatename === val.roommatename)} title={val.roommatename}/>
+                                    <DisplayCard key={val.roommatname} type="P" data={props.data.filter( d => d.roommatename === val.roommatename)} title={val.roommatename} onEdit={props.onEdit} onDelete={props.onDelete}/>
                                 </Col>) }
                         </Row>} <br/>
 
@@ -60,6 +60,7 @@ function RoomateData(props) {
                             */}
                             <InsertModal
                                 onNewPayment = {props.onNewPayment}
+                                data={props.data}
                                 month={props.month}
                                 show={modalShow}
                                 source={"Payment"}

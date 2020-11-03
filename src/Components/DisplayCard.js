@@ -23,7 +23,7 @@ function DisplayCard(props) {
         // props
         //  type = type (harcoded to Payment or Due)
         //  data = payment data for roommate
-        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} data={val}/>) 
+        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} data={val} onEdit={props.onEdit} onDelete={props.onDelete} />) 
     }
     // if type == E, then display ExpenseData
     // set display type to due, title to title prop, which was hardcoded in parent to expense
@@ -36,7 +36,7 @@ function DisplayCard(props) {
         //  type = type (harcoded to Payment or Due)
         //  payments = cumulative payment data for that month and matching category. Used to display expense as Paid/Unpaid
         //  data = expense data 
-        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} payments={props.payments.filter(p => p.category === val.category)} data={val}/>) 
+        tableRows = props.data.map(val => <TableRows key={val.id} type={props.type} payments={props.payments.filter(p => p.category === val.category)} data={val} onEdit={props.onEdit} onDelete={props.onDelete}/>) 
     }
    
     // render card and table component
@@ -60,6 +60,7 @@ function DisplayCard(props) {
                         <th>Amount {displayType}</th>
                         <th>{displayType} Date</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead> 
                 <tbody>
