@@ -51,15 +51,21 @@ function TableRow(props) {
         else 
             date = splitDate(props.data.duedate);
 
+        // set status to data prop status value    
+        if (props.data.status === "Paid")
+            paid = true
+        else
+            paid = false
+
         // check if total paymets are not undefined
         // if so, get total payments amount and compare to expense amount    
-        if (props.payments[0] !== undefined) {
-            var payment = +props.payments[0].amount
-            if (num <= payment) //if payments are greater than or equal to expense, set state to Paid
-                paid = true
-            else // else set to Unpaid
-                paid = false
-        }
+        // if (props.payments[0] !== undefined) {
+        //     var payment = +props.payments[0].amount
+        //     if (num <= payment) //if payments are greater than or equal to expense, set state to Paid
+        //         paid = true
+        //     else // else set to Unpaid
+        //         paid = false
+        // }
     }
 
     // display table row component based on variables passed as props or defined above

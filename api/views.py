@@ -34,7 +34,7 @@ def get_all_expenses():
 
     # generate dictionary array of expenses with values from the query above
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
+        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'years': expense.year, 'status': expense.status, 'id': expense.expenseid})
 
     # return json array of expenses
     return jsonify(expenses)
@@ -54,15 +54,23 @@ def get_expenses_months():
     # return json array of expense months
     return jsonify(months)
 
-@main.route('/api/v1/expenses/years', methods=['GET'])
+@main.route('/api/v1/years', methods=['GET'])
 def get_expenses_years():
 
     years = []
 
+    expenseQuery = Expense.query.with_entities(Expense.year).distinct(Expense.year)
+    paymentQuery = Payment.query.with_entities(Payment.year).distinct(Payment.year)
+
+    combined = paymentQuery.union(expenseQuery).order_by(Payment.year)
+
     # store each distinct year in the years array
-    for y in Expense.query.distinct(Expense.year):
+    for y in combined:
         years.append(y.year)
- 
+    
+    # for x in Payment.query.distinct(Payment.year):
+    #     if (x.year not )
+
     # return json array of expense years
     return jsonify(years)
 
@@ -79,7 +87,7 @@ def get_expenses_filtered():
 
     # generate dictionary array of expenses with values from the query above
     for expense in expense_list:
-        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'status': expense.status, 'id': expense.expenseid})
+        expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'years': expense.year, 'status': expense.status, 'id': expense.expenseid})
 
     # return json array of expenses
     return jsonify(expenses)
@@ -94,7 +102,7 @@ def get_all_payments():
 
     # generate dictionary array of payments with values from the query above
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category, 'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'years': payment.year,  'status': payment.status, 'id': payment.paymentid})
 
     # return json array of payments
     return jsonify(payments)
@@ -113,7 +121,7 @@ def get_payments_filtered():
 
     # generate dictionary array of payments with values from the query above
     for payment in payment_list:
-        payments.append({'roommatename': payment.roommatename,'category': payment.category,'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'status': payment.status, 'id': payment.paymentid})
+        payments.append({'roommatename': payment.roommatename,'category': payment.category,'amount': Decimal(payment.amount), 'paymentdate': payment.paymentdate, 'month': payment.month, 'years': payment.year,  'status': payment.status, 'id': payment.paymentid})
 
     # return json array of payments
     return jsonify(payments)
@@ -132,6 +140,21 @@ def get_expenses_filtered_v2(year,month):
 
     # generate dictionary array of expenses with values from the query above
     for expense in expense_list:
+        # check total payments for each expense
+        payments = Payment.query.filter(Payment.month == month.capitalize(), Payment.year == year, Payment.category == expense.category).all()
+        totalPaid = 0
+        for payment in payments:
+            totalPaid += Decimal(payment.amount)
+
+        # modify status if needed
+        if (totalPaid >= Decimal(expense.amount) and expense.status != 'Paid'):
+            expense.status  = 'Paid'
+            db.session.commit()
+        elif (totalPaid < Decimal(expense.amount) and expense.status == 'Paid'):
+            expense.status  = 'Unpaid'
+            db.session.commit()
+
+        # add expense to response
         expenses.append({'category': expense.category, 'amount': Decimal(expense.amount), 'duedate': expense.duedate, 'month': expense.month, 'year': expense.year, 'status': expense.status, 'id': expense.expenseid})
 
     # return json array of expenses

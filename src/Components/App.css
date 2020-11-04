@@ -111,6 +111,12 @@ code {
   left: 50%;
   transform: translate(-50%, -50%) 
 }
+
+.errorMessage {
+  color: red;  
+  text-align: center;
+  padding-top: 25px;
+}
 /* --------------------------------------------------------  */
 
 
