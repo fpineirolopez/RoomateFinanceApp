@@ -39,6 +39,23 @@ code {
   padding-top: 2rem;
 }
 
+.select-column>h1{
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.select-column> .row{
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .select-column>h1{
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
 .dropdown-menu {
   padding: 0;
 }
@@ -60,6 +77,8 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .dropdown-item:focus>p{
@@ -91,6 +110,12 @@ code {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) 
+}
+
+.errorMessage {
+  color: red;  
+  text-align: center;
+  padding-top: 25px;
 }
 /* --------------------------------------------------------  */
 
@@ -184,6 +209,13 @@ code {
 
 .insert-button {
   text-align: center;
+}
+
+.small-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /* --------------------------------------------------------  */

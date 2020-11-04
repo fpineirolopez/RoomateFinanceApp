@@ -1,68 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Roomate Finance WebApp 
 
-## Available Scripts
+Deployed at https://roommate-finance-app.herokuapp.com/
 
-In the project directory, you can run:
+Roomate Finance WebApp to manage common expenses and track individual payments.
 
-### `npm start`
+Application consists of a **React JS** front-end, with a **Flask/Python** back-end and a **PostgreSQL** DB
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+WebApp deployed using **Heroku**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## React JS
 
-### `npm test`
+This project's frontend was bootstrapped with Create React App, and makes use of react-bootstrap library for styling and stylized components
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run locally, use `npm start` or `yarn start`
 
-### `npm run build`
+To deploy front-end, use `npm run build`. Flask back-end will use files from build folder to access and display frontend.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Flask/Python
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Python backend using Flask. 3 main files:
+* __init__.py --> init file with `create_app()` function. Initializes db object and maps to blueprint object in views.py
+* views.py    --> file with all api routes and corresponding queries, inserts, updates to PostgreSQL DB
+* models.py   --> contains Expense and Payment object classes used to model DB objects and calls
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Flask backend makes use of the following libraries:
+* flask
+* gunicorn            --> for heroku deployment
+* sqlalchemy          --> for DB modeling and access
+* flask-sqlalchemy    --> for DB modeling and access
+* simplejson          --> for Decimal json parsing
+* psycopg2            --> for PostgreSQL access
 
-### `npm run eject`
+Installed locally using pipenv --> `pip install pipenv`
+Other libraries installed with command --> `pipenv install <library-name>`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To deploy:
+* Lock Pipfile                                         --> `pipenv lock`
+* Install the last successful environment in lock file --> `pipenv install --ignore-pipfile`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## PostgreSQL DB
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Simple DB with 2 tables:
+* DB Name: roommate-finances
+* Tables:
+    * expenses
+    * payments
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The expenses table records expenses for each month, including information like:
+* amount due
+* category
+* due date
 
-## Learn More
+The payments table records payments for each month, including information like:
+* roommate name
+* category
+* amount paid
+* payment date
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The DB objects are modeled in the flask backend using SQLAlchemy. The models are in the models.py file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Heroku Deployment
 
-### Code Splitting
+Deployed to Heroku with Personal/Hobby license.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Files used for deployment:
+* wsigi.py    --> calls `create_app()` function from __inti__.py file
+* Procfile    --> used for heroku, references app object in wsgi.py file
+* runtime.txt --> specifies Python runtime (python-3.8.5)
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+To deploy run following commands from master branch:
+* `git add .`                          --> add any local changes (if any)
+* `git commit -m "message"`            --> commit local changes (if any)
+* `git push or git push heroku master` --> push changes. Git push will automatically trigger heroku build. Adding heroku master will display heroky build log on console
