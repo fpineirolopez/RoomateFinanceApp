@@ -71,4 +71,4 @@ Files used for deployment:
 To deploy run following commands from master branch:
 * `git add .`                          --> add any local changes (if any)
 * `git commit -m "message"`            --> commit local changes (if any)
-* `git push or git push heroku master` --> push changes. Git push will automatically trigger heroku build. Adding heroku master will display heroky build log on console
+* `git push or git push heroku master` --> push changes. Git push will automatically trigger heroku build. Adding heroku master will display heroku build log on console
